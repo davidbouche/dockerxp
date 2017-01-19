@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    links:
+      - db
+    restart: always
+    env_file: .env
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shyrka
+      MYSQL_USER: shyrka
+      MYSQL_PASSWORD: shyrka
+
+  dbadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    restart: always
